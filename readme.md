@@ -101,7 +101,7 @@ log output:
 }
 ```
 
-# slog with context
+## slog with context
 ```go
 // init slog
 slogger.Init(WithEnableJSON(), WithAddSource(true))
