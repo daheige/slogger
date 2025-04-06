@@ -8,7 +8,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// Init slog init
+// Init golang slog package init
 func Init(opts ...Option) {
 	opt := Options{
 		level:        slog.LevelInfo, // default:info level
@@ -64,4 +64,11 @@ func Init(opts ...Option) {
 
 	// set global Logger
 	slog.SetDefault(slog.New(handler))
+}
+
+// With returns a Logger that includes the given attributes
+// in each output operation. Arguments are converted to
+// attributes as if by slog [Logger.Log].
+func With(args ...any) *slog.Logger {
+	return slog.Default().With(args...)
 }
