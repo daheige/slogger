@@ -78,9 +78,9 @@ log.Println("abc")
 
 ## slog with attrs
 ```go
-Init(WithEnableJSON(), WithAddSource(true))
+slogger.Init(WithEnableJSON(), WithAddSource(true))
 // support custom attributes
-l := With(slog.String("request_id", "abc"), "ns", "default")
+l := slogger.With(slog.String("request_id", "abc"), "ns", "default")
 l.Info("hello", slog.String("name", "slog"))
 l.Info("world", slog.String("user", "coco"))
 ```
@@ -104,16 +104,17 @@ log output:
 # slog with context
 ```go
 // init slog
-Init(WithEnableJSON(), WithAddSource(true))
+slogger.Init(WithEnableJSON(), WithAddSource(true))
 
 // Using the context package with Slog
 // create context slog handler
-h := ContextHandler{
+h := slogger.ContextHandler{
     Handler: slog.Default().Handler(),
 }
-logger := slog.New(h)
-ctx := AppendCtx(context.Background(), slog.String("request_id", "xxx-123"))
-logger.InfoContext(ctx, "hello", slog.String("uid", "789"))
+
+lg := slog.New(h)
+ctx := slogger.AppendCtx(context.Background(), slog.String("request_id", "xxx-123"))
+lg.InfoContext(ctx, "hello", slog.String("uid", "789"))
 ```
 output:
 ```json
